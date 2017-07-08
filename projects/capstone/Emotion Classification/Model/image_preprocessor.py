@@ -17,7 +17,7 @@ def process(filePath, newFilePath, fileName):
     # the .flow() command below generates batches of randomly transformed images
     # and saves the results to the `preview/` directory
     d = newFilePath + filePath[-1]
-    for batch in datagen.flow(x, batch_size = 1, save_to_dir = d, save_prefix = fileName, save_format='jpeg'):
+    for batch in datagen.flow(x, batch_size = 1, save_to_dir = d, save_prefix = b + '_' + fileName.rstrip('jpg').rstrip('.'), save_format='jpeg'):
         break
 batch = ''.join(list(map(str, range(7))))
 

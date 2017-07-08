@@ -48,7 +48,7 @@ def gen_record(csvfile,channel):
             exit(-1)
 
 
-def unique_name(pardir,prefix,label,suffix='jpg'):
+def unique_name(pardir,prefix,suffix='jpg'):
     filename = '{0}_{1}.{2}'.format(prefix,random.randint(1,10**8),suffix)
     filepath = os.path.join(pardir,filename)
     if not os.path.exists(filepath):

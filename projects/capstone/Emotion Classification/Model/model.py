@@ -15,8 +15,7 @@ def model(weights = None, drop_rate = 0.0):
     model.add(ZeroPadding2D(2,2), input_shape=(1, 48, 48))
     model.add(Conv2D(320, (3, 3), activation='PReLU'))
     model.add(ZeroPadding2D(1,1))
-    model.add(Conv2D(320, (3, 3), activation='PReLU'))
-    #model.add(Input(tensor=tf.nn.fractional_max_pool()))
+    model.add(tf.nn.fractional_max_pool(Conv2D(320, (3, 3), activation='PReLU')))
 
     model.add(ZeroPadding2D(1,1))
     model.add(Conv2D(640, (3, 3), activation='PReLU'))

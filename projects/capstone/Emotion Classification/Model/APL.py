@@ -5,6 +5,7 @@ from keras.layers import regularizers
 from keras.layers import constraints
 from keras.engine import InputSpec
 from keras.engine.topology import Layer
+import tensorflow as tf
 
 class APLUnit(Layer):
     """Adaptive Piecewise Linear Units.

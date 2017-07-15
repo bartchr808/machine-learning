@@ -75,14 +75,19 @@ def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
     return model
 
 # build the model
-model = model('VGG16_regular_fourth_try.py')
+model = model('VGG16_regular_fourth_try.h5')
 
 batch_size = 256
 
 train_datagen = ImageDataGenerator(
     rescale = 1./255,
     horizontal_flip = True,
-    vertical_flip = True,
+    vertical_flip = False,
+    rotation_range = 30,
+    shear_range = 0.2,
+    width_shift_range = 0.2,
+    height_shift_range = 0.2,
+    zoom_range = 0.2,
     fill_mode = 'nearest')
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
@@ -101,7 +106,7 @@ validation_generator = test_datagen.flow_from_directory(
         batch_size = batch_size,
         color_mode = 'grayscale')
 
-save_best = ModelCheckpoint('VGG16_regular_fourth_try.h5', monitor='val_acc', verbose=2, save_best_only=True,
+save_best = ModelCheckpoint('VGG16_regular_sixth_try.h5', monitor='val_acc', verbose=2, save_best_only=True,
                               mode='max')
 
 model.fit_generator(

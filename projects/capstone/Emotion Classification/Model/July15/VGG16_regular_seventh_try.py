@@ -20,51 +20,28 @@ np.random.seed(seed)
 #    return tf.nn.fractional_max_pool(x,p_ratio)[0]
 
 def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
+    
     model = Sequential()
+    
     model.add(Dropout(0.07, input_shape=(48, 48, 1)))
     model.add(ZeroPadding2D((1,1)))
-    model.add(Conv2D(32, (3, 3)))
-    #model.add(PReLU())
+    model.add(Conv2D(64, (5, 5)))
     model.add(APLUnit(S=S))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Conv2D(32, (3, 3)))
-    #model.add(PReLU())
-    model.add(APLUnit(S=S))
-    #model.add(Lambda(frac_max_pool))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-    #model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[6].output, p_ratio, overlapping=True)[0]))
+    model.add(MaxPooling2D((3,3), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
-    model.add(Conv2D(64, (3, 3)))
-    #model.add(PReLU())
+    model.add(Conv2D(64, (5, 5)))
     model.add(APLUnit(S=S))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Conv2D(64, (3, 3)))
-    #model.add(PReLU())
-    model.add(APLUnit(S=S))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-    #model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[13].output, p_ratio, overlapping=True)[0]))
+    model.add(MaxPooling2D((3,3), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
-    model.add(Conv2D(128, 3, 3))
-    #model.add(PReLU())
+    model.add(Conv2D(128, (4, 4)))
     model.add(APLUnit(S=S))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Conv2D(128, 3, 3))
-    #model.add(PReLU())
-    model.add(APLUnit(S=S))
-    #model.add(MaxPooling2D((2,2), strides=(2,2)))
-    model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[20].output, p_ratio, overlapping=True)[0]))
     
     model.add(Flatten())
-    model.add(Dense(700))
-    model.add(APLUnit(S=S))
-    #model.add(PReLU())
     model.add(Dropout(0.5))
-    model.add(Dense(700))
-    #model.add(PReLU())
+    model.add(Dense(4096))
     model.add(APLUnit(S=S))
-    model.add(Dropout(0.5))
     model.add(Dense(6, activation = 'softmax'))
 
     model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy', fbeta_score])
@@ -75,14 +52,19 @@ def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
     return model
 
 # build the model
-model = model('VGG16_regular_fourth_try.py')
+model = model()
 
 batch_size = 256
 
 train_datagen = ImageDataGenerator(
     rescale = 1./255,
     horizontal_flip = True,
-    vertical_flip = True,
+    vertical_flip = False,
+    rotation_range = 30,
+    shear_range = 0.2,
+    width_shift_range = 0.2,
+    height_shift_range = 0.2,
+    zoom_range = 0.2,
     fill_mode = 'nearest')
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
@@ -101,7 +83,7 @@ validation_generator = test_datagen.flow_from_directory(
         batch_size = batch_size,
         color_mode = 'grayscale')
 
-save_best = ModelCheckpoint('VGG16_regular_fourth_try.h5', monitor='val_acc', verbose=2, save_best_only=True,
+save_best = ModelCheckpoint('VGG16_regular_seventh_try.h5', monitor='val_acc', verbose=2, save_best_only=True,
                               mode='max')
 
 model.fit_generator(

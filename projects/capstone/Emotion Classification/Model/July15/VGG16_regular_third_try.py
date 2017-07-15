@@ -32,7 +32,7 @@ def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
     model.add(APLUnit(S=S))
     #model.add(Lambda(frac_max_pool))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
-    #model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[6].output, p_ratio, overlapping=True)[0]))
+#    model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[6].output, p_ratio, overlapping=True)[0]))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Conv2D(64, (3, 3)))
@@ -43,7 +43,7 @@ def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
     #model.add(PReLU())
     model.add(APLUnit(S=S))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
-    #model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[13].output, p_ratio, overlapping=True)[0]))
+#    model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[13].output, p_ratio, overlapping=True)[0]))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Conv2D(128, 3, 3))
@@ -53,8 +53,8 @@ def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
     model.add(Conv2D(128, 3, 3))
     #model.add(PReLU())
     model.add(APLUnit(S=S))
-    #model.add(MaxPooling2D((2,2), strides=(2,2)))
-    model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[20].output, p_ratio, overlapping=True)[0]))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+#    model.add(InputLayer(input_tensor = tf.nn.fractional_max_pool(model.layers[20].output, p_ratio, overlapping=True)[0]))
     
     model.add(Flatten())
     model.add(Dense(700))
@@ -75,7 +75,7 @@ def model(weights = None, S = 5, p_ratio = [1.0, 1.41, 1.41, 1.0]):
     return model
 
 # build the model
-model = model('VGG16_regular_fourth_try.py')
+model = model()
 
 batch_size = 256
 
@@ -101,7 +101,7 @@ validation_generator = test_datagen.flow_from_directory(
         batch_size = batch_size,
         color_mode = 'grayscale')
 
-save_best = ModelCheckpoint('VGG16_regular_fourth_try.h5', monitor='val_acc', verbose=2, save_best_only=True,
+save_best = ModelCheckpoint('VGG16_regular_third_try.h5', monitor='val_acc', verbose=2, save_best_only=True,
                               mode='max')
 
 model.fit_generator(

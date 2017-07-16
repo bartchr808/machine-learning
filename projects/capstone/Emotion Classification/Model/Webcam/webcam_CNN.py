@@ -56,9 +56,11 @@ model = model('../VGG16_regular_ninth_try2_PRIVATE_TEST.h5')
 test_datagen = ImageDataGenerator(rescale = 1./255)
 
 def prediction(img):
-    prediction_generator = test_datagen.flow_from_directory(
-            img,
-            target_size = (48, 48),
-            color_mode = 'grayscale')
+    #prediction_generator = test_datagen.flow_from_directory(
+    #        img,
+    #        target_size = (48, 48),
+    #        color_mode = 'grayscale')
+    prediction_generator = test_datagen.flow(img, [1])
+    #return model.predict_proba(img)
 
     return model.predict_generator(prediction_generator, 1)

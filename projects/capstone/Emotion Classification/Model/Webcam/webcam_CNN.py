@@ -56,11 +56,21 @@ model = model('../VGG16_regular_ninth_try2_PRIVATE_TEST.h5')
 test_datagen = ImageDataGenerator(rescale = 1./255)
 
 def prediction(img):
-    #prediction_generator = test_datagen.flow_from_directory(
-    #        img,
-    #        target_size = (48, 48),
-    #        color_mode = 'grayscale')
+    # uncomment for testing with actual image instead of webcam
+    """
+    prediction_generator = test_datagen.flow_from_directory(
+            img,
+            target_size = (48, 48),
+            color_mode = 'grayscale')
+    """
     prediction_generator = test_datagen.flow(img, [1])
-    #return model.predict_proba(img)
 
     return model.predict_generator(prediction_generator, 1)
+
+# For when I want to test using an actual image in /images
+"""
+pred_array = prediction('./images')[0]
+
+print(pred_array)
+print("Angry: ", pred_array[0], "\nFear: ", pred_array[1], "\nHappy: ", pred_array[2], "\nSad: ", pred_array[3], "\nSurprise: ", pred_array[4], "\nNeutral: ", pred_array[5])
+"""

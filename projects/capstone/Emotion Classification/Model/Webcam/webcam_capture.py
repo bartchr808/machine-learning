@@ -1,3 +1,7 @@
+ # coding: utf-8
+import sys
+
+sys.path.append('/usr/local/lib/python2.7/site-packages')
 import os
 import time
 import cv2
@@ -28,8 +32,8 @@ while (True):
     input_data = np.resize(cropped, [1, 48, 48, 1])
     pred_array = prediction(input_data)[0]
 
-    print(pred_array)
-    print("Angry: ", pred_array[0], "\nFear: ", pred_array[1], "\nHappy: ", pred_array[2], "\nSad: ", pred_array[3], "\nSurprise: ", pred_array[4], "\nNeutral: ", pred_array[5])
+    #print(pred_array)
+    print "Angry: ", pred_array[0], "\nFear: ", pred_array[1], "\nHappy: ", pred_array[2], "\nSad: ", pred_array[3], "\nSurprise: ", pred_array[4], "\nNeutral: ", pred_array[5]
 
     # Plot
     fig, ax1 = plt.subplots()

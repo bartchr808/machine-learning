@@ -1,4 +1,5 @@
-# All necessary imports
+# Based off of implementation of PReLU in keras' github repo
+
 import numpy as np
 from keras.layers import initializers
 from keras.layers import regularizers
@@ -32,7 +33,7 @@ class APLUnit(Layer):
             so that each filter only has one set of parameters,
             set `shared_axes=[1, 2]`.
     # References
-        - [Keras source code](https://github.com/fchollet/keras/blob/master/keras/layers/advanced_activations.py#L49)
+        - [Keras source code for PReLU](https://github.com/fchollet/keras/blob/master/keras/layers/advanced_activations.py#L49)
         - [Learning Activation Functions to Improve Deep Neural Networks](https://arxiv.org/pdf/1412.6830.pdf)
     """
 

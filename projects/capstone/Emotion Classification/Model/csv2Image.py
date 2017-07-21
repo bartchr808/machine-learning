@@ -1,3 +1,6 @@
+# Courtesy of Kaggle user 'NoBugs'
+# Transforms string of numbers in .csv to image and saves it
+
 import numpy as np
 import cv2
 import pandas as pd
@@ -9,14 +12,12 @@ curdir = os.path.abspath(os.path.dirname(__file__))
 def gen_record(csvfile,channel):
     data = pd.read_csv(csvfile,delimiter=',',dtype='a')
     labels = np.array(data['emotion'],np.float)
-    # print(labels,'\n',data['emotion'])
 
     imagebuffer = np.array(data['pixels'])
     images = np.array([np.fromstring(image,np.uint8,sep=' ') for image in imagebuffer])
     del imagebuffer
     num_shape = int(np.sqrt(images.shape[-1]))
     images.shape = (images.shape[0],num_shape,num_shape)
-    # img=images[0];cv2.imshow('test',img);cv2.waitKey(0);cv2.destroyAllWindow();exit()
     dirs = set(data['Usage'])
     subdirs = set(labels)
     class_dir = {}
@@ -56,7 +57,3 @@ if __name__ == '__main__':
     filename = '../fer2013/fer2013.csv'
     filename = os.path.join(curdir,filename)
     gen_record(filename,1)
-
-    # ##################### test
-    # tmp = unique_name('./Training','Training')
-    # print(tmp)

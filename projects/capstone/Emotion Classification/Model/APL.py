@@ -1,4 +1,5 @@
-# All necessary imports
+# Based off of implementation of PReLU in keras' github repo
+
 import numpy as np
 from keras.layers import initializers
 from keras.layers import regularizers

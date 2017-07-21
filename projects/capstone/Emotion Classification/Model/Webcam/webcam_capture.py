@@ -1,15 +1,15 @@
- # coding: utf-8
-import sys
+# coding: utf-8
 
+# incase python can't find cv2
+import sys
 sys.path.append('/usr/local/lib/python2.7/site-packages')
+
 import os
-import time
 import cv2
 import numpy as np
 from PIL import Image
 from webcam_CNN import prediction
 from matplotlib import pyplot as plt
-import matplotlib.image as mpimg
 
 vidcap = cv2.VideoCapture(0)
 
@@ -32,14 +32,13 @@ while (True):
     input_data = np.resize(cropped, [1, 48, 48, 1])
     pred_array = prediction(input_data)[0]
 
-    #print(pred_array)
     print "Angry: ", pred_array[0], "\nFear: ", pred_array[1], "\nHappy: ", pred_array[2], "\nSad: ", pred_array[3], "\nSurprise: ", pred_array[4], "\nNeutral: ", pred_array[5]
+
 
     # Plot
     fig, ax1 = plt.subplots()
     left, bottom, width, height = [0.225, 0.73, 0.15, 0.15]
     ax2 = fig.add_axes([left, bottom, width, height])
-    #ax2.invert_yaxis()
 
     plt.tick_params(
     axis='both',

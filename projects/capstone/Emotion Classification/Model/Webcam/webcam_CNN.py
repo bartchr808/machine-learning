@@ -1,14 +1,13 @@
-# All necessary imports
+# Model for running with webcam; removes unecessary code from the full model
+
 import numpy as np
 import h5py
 from APL import APLUnit
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Flatten, InputLayer
 from keras.layers.convolutional import Conv2D, MaxPooling2D, ZeroPadding2D
-from keras.utils import np_utils
 from keras import backend as K
 from keras.preprocessing.image import ImageDataGenerator
-from keras.layers.advanced_activations import PReLU
 import tensorflow as tf
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 
@@ -51,11 +50,13 @@ def model(weights = None, S = 5, p_ratio = [1.0, 2.6, 2.6, 1.0]):
     return model
 
 # build the model
-model = model('../VGG16_regular_ninth_try2_PRIVATE_TEST.h5')
+model = model('../VGG16_regular_ninth_try2_PRIVATE_TEST.h5') # my weights
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
 
 def prediction(img):
+    prediction_generator = test_datagen.flow(img, [1])
+
     # uncomment for testing with actual image instead of webcam
     """
     prediction_generator = test_datagen.flow_from_directory(
@@ -63,8 +64,6 @@ def prediction(img):
             target_size = (48, 48),
             color_mode = 'grayscale')
     """
-    prediction_generator = test_datagen.flow(img, [1])
-
     return model.predict_generator(prediction_generator, 1)
 
 # For when I want to test using an actual image in /images

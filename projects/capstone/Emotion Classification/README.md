@@ -8,4 +8,4 @@ Needs opencv, matplotlib, PIL, h5py, python 2.7, keras, tensorflow, and some oth
 
 If running into issue with not being able to import name weakref, run: `pip install backports.weakref`
 
-If getting error `No module named google.protobuf`, run: `conda install protobuf` assuming you are in a conda environment
+If getting error `No module named google.protobuf`, run: `conda install protobuf`

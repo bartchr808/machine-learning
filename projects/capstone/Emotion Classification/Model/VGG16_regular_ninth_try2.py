@@ -14,7 +14,7 @@ from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 seed = 7
 np.random.seed(seed)
 training_size = 28273
-validation_size = 3533 # size of private test; change when trying on public test
+validation_size = 3533 # size of either test set
 
 #def frac_max_pool(x):
 #    return tf.nn.fractional_max_pool(x,p_ratio)[0]
